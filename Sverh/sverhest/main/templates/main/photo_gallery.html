@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Фотогалерея | {{ block.super }}
+
+{% endblock %}
+
+{% block sidebar %}
+{% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+
+
+{% block content %}
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <a href="{% url 'home' %}" class="breadcrumb-item active">Главная</a>
+      <a href="{% url 'photo_gallery' %}" class="breadcrumb-item active">Фотогалерея</a>
+  </ol>
+</nav>
+
+  <style>
+   .scale {
+    transition: 1s;
+   }
+   .scale:hover {
+    transform: scale(1.5);
+   }
+   .bordrad{
+   border-radius: 20px;
+   }
+   </style>
+<h5 align="center">Фотогалерея:</h5>
+<!--<br>-->
+{% if page_obj %}
+    {% for item in page_obj %}
+        {% if item.is_published %}
+<!--        <div class="card mb-3" style="width: 25rem;">-->
+<!--            <div class="card-header">-->
+                <img src="{{ item.photo.url }}" alt="" vspace="25" hspace="25" width="350" height="230" class="scale bordrad">
+
+<!--            </div>-->
+<!--        </div>-->
+        {% endif %}
+    {% endfor %}
+{% endif %}
+<br>
+<hr>
+<br>
+
+{% endblock %}
+
+<!--<div class="container-float">-->
+<!--    <div class="row">-->
+<!--        {% for cup in context_cups %}-->
+<!--        <div id="image-{{cup.id}}" class="col-xs-12 col-sm-6 col-md-4 col-lg-4">-->
+<!--            <img src="{{ cup.photo.url }}" />-->
+<!--        </div>-->
+<!--        {% endfor %}-->
+<!--     </div>-->
+<!--</div>-->

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }} | {{ block.super }}
+
+{% endblock %}
+
+{% block sidebar %}
+{% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <a href="/home" class="breadcrumb-item active">Главная</a>
+  </ol>
+</nav>
+<h5>Существа:</h5>
+{% if page_obj %}
+{% for item in page_obj %}
+    {% if item.is_published %}
+
+    <div class="card mb-3">
+    <div class="card-header">
+  Категория: <a href="{% url 'category' item.category.pk %}">{{ item.category }}</a>
+</div>
+<div class="card body">
+    <div class="media">
+        <img src=" {{ item.photo.url }} " alt="" width="350" class="mr-3">
+
+        <div class="media-body">
+
+            <h5 class="card-title pl-3">{{ item.title }}</h5>
+            {% autoescape off %}
+            <p class="card-text pl-3">{{ item.content|linebreaks|truncatewords:47 }}</p>
+            {% endautoescape %}
+            <div class="text-left pb-1">
+                <a href="{{ item.get_absolute_url }}" class="btn btn-secondary">
+                     Подробнее...
+                    <div class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></div>
+                </a>
+        </div>
+    </div>
+  </div>
+</div>
+<div class="card-footer text-muted">
+  Бестиарий в мире сверхъестественного
+</div>
+
+</div>
+
+{% endif %}
+{% endfor %}
+<br>
+{% else %}
+<p>По вашему запросу ничего не найдено.</p>
+{% endif %}
+
+{% endblock %}

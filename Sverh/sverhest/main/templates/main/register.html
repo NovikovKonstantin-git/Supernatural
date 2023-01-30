@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Регистрация | {{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+{% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <a class="breadcrumb-item active" aria-current="page" href ="{% url 'home' %}">Главная</a>
+      <a class="breadcrumb-item active" aria-current="page" href ="{% url 'register' %}">Регистрация</a>
+
+  </ol>
+</nav>
+
+<h4>Регистрация</h4>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-secondary btn-block">
+        <a>Регистрация</a>
+    </button>
+        <br>
+</form>
+
+{% endblock %}

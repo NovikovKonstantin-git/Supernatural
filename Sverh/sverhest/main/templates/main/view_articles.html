@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title%}
+    {{ articles_item.title }} | {{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+{% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+  <style>
+   .scale {
+    transition: 1s;
+   }
+   .scale:hover {
+    transform: scale(1.5);
+   }
+   .centr{
+   text-align: center;
+   }
+  </style>
+<!--   .bg{-->
+<!--   background-color: #110c0c0c0;-->
+<!--   }-->
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <a class="breadcrumb-item active" aria-current="page" href ="{% url 'home' %}">Главная</a>
+      <a class="breadcrumb-item active" aria-current="page" href = "{{articles_item.category.get_absolute_url}}">{{articles_item.category.title}}</a>
+      <a class="breadcrumb-item active" aria-current="page" href ="{{articles_item.get_absolute_url}}">{{articles_item.title}}</a>
+
+  </ol>
+</nav>
+
+  <div class="card mb-3">
+    <div class="card-header">
+      Категория: <a href="{% url 'category' articles_item.category.pk %}" style="color: #000000">{{ articles_item.category }}</a>
+    </div>
+    <div class="card body pl-3">
+            <h5 class="card-title mx-auto">{{ articles_item.title }}</h5>
+                <p>
+                   <img src=" {{ articles_item.photo.url }} " alt="" width="350"  class="float-left mr-3 scale" >
+                    {{ articles_item.content|safe|linebreaksbr }}
+                </p>
+    </div>
+    <div class="card-footer text-muted">
+      Бестиарий в мире сверхъестественного
+    </div>
+  </div>
+<br>
+          <div>
+            <h4 class="mb-3">Оставьте комментарий</h4>
+            <form method="post">
+
+                  {{ comment_form.as_p }}
+                  {% csrf_token %}
+                {% if request.user.is_authenticated %}
+                <input type="submit" value="Отправить" class="btn btn-secondary py-2 px-5">
+                {% else %}
+                <div class="alert alert-danger" role="alert">
+                <p>Для отправки комментариев необходимо авторизоваться</p>
+                </div>
+                {% endif %}
+            </form>
+
+          </div>
+
+        <div class="pt-3 mt-3">
+          {% with comments.count as total_comments %}
+          <h4 class="mb-5">
+              {% if total_comments == 0 %}
+              {{ total_comments }} комментариев
+              {% elif total_comments == 1 %}
+              {{ total_comments }} комментарий
+              {% elif total_comments < 5 %}
+              {{ total_comments }} комментария
+              {% elif total_comments > 4 < 11 %}
+              {{ total_comments }} комментариев
+              {% else %}
+              {{ total_comments }} комментариев
+              {% endif %}
+          </h4>
+          {% endwith %}
+          {% for comment in comments %}
+          <div class="card mb-3">
+            <div class="card-header">
+                <p>Автор комментария: {{ comment.author}}</p>
+            </div>
+              <div class="card body pl-3">
+            <p>{{ comment.text_com|linebreaks }}</p>
+              </div>
+          </div>
+
+          {% endfor %}
+            <br>
+
+    </div>
+{% endblock %}

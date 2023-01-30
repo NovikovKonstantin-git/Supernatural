@@ -1,0 +1,168 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="icon" href="../media/photos/devil.png" type="image/x-icon"> <!-- поменять ссылку на картинку -->
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+<!--    <link rel="stylesheet" href="{% static 'css/style.css' %}">-->
+
+    <title>{% block title %}Бестиарий{% endblock %}</title>
+  </head>
+  <body>
+
+
+
+{% include 'inc/_nav.html' %}
+
+
+<div class="container mt-3">
+
+  <div class="row">
+      <div class="col-md3">
+      {% block sidebar %}SIDEBAR{% endblock %}
+      </div>
+
+      <div class="col-md-9">
+
+          {% if messages %}
+
+          {% for message in messages %}
+
+            <!-- Не менять цвет кнопок -->
+            {% if message.tags == 'error' %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ message }}
+                    </div>
+            {% else %}
+                    <div class="alert alert-{{ message.tags }}" role="alert">
+                        {{ message }}
+                    </div>
+            {% endif %}
+
+
+
+          {% endfor %}
+
+          {% endif %}
+
+      {% block content %}CONTENT{% endblock %}
+
+          {% if page_obj.has_other_pages %}
+          <nav aria-label="...">
+            <ul class="pagination">
+
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                         <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">Назад</a>
+                        </li>
+                    {% endif %}
+
+                {% for p in page_obj.paginator.page_range %}
+
+                    {% if page_obj.number == p %}
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" href="?page={{ p }}">{{ p }}<span class="sr-only">(current)</span> </a>
+                        </li>
+                    {% elif p > page_obj.number|add:-3 and p < page_obj.number|add:3 %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ p }}">{{ p }}</a>
+                        </li>
+                    {% endif %}
+
+               {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Далее</a>
+                    </li>
+                {% endif %}
+
+            </ul>
+          </nav>
+
+          {% endif %}
+
+      </div>
+  </div>
+</div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
+
+
+  <div class="container-fluid py-5 bg-dark">
+    <div class="row">
+      <div class="col-lg-3 mb-3">
+        <a class="d-inline-flex align-items-center mb-2 link-dark text-decoration-none" href="{% url 'home' %}" aria-label="Bootstrap">
+            <img src="../media/photos/devil.png" alt="" height="40" width="40">
+            <span class="fs-5">Сверхъестественное</span>
+        </a>
+        <ul class="list-unstyled small text-muted">
+          <li class="mb-2">Сверхъестественное - сайт, в котором вы найдете практически всех мистических, паранормальных существ с подробным описанием и изображением.</li>
+          <li class="mb-2">При заимстовании иформации с этого сайта следует указывать источник.</li>
+          <li class="mb-2">Версия 1.0</li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-2 offset-lg-1 mb-3">
+        <h5></h5>
+        <ul class="list-unstyled">
+          <li class="mb-2"><a href=""></a></li>
+          <li class="mb-2"><a href=""></a></li>
+          <li class="mb-2"><a href=""></a></li>
+          <li class="mb-2"><a href=""></a></li>
+          <li class="mb-2"><a href=""></a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-2 mb-3">
+        <h5></h5>
+        <ul class="list-unstyled">
+          <li class="mb-2"><a href=""></a></li>
+          <li class="mb-2"><a href=""></a></li>
+          <li class="mb-2"><a href=""></a></li>
+          <li class="mb-2"><a href=""></a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-2 mb-3">
+        <h5></h5>
+        <ul class="list-unstyled">
+          <li class="mb-2"><a href=""></a></li>
+          <li class="mb-2"><a href=""></a></li>
+          <li class="mb-2"><a href=""></a></li>
+          <li class="mb-2"><a href=""></a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-2 mb-3 " >
+        <h5 style="color: white">Связь</h5>
+        <ul class="list-unstyled">
+          <li class="mb-2">
+              <a href="https://vk.com/joskiykostya"><img src="../media/photos/vk.png" alt="" height="40" width="40"> ВКонтакте</a>
+          </li>
+          <li class="mb-2">
+
+              <a href="https://www.instagram.com/joskiykostya/?hl=ru"><img src="../media/photos/instagram.png" alt="" height="40" width="40"> Инстаграм</a>
+          </li>
+          <li class="mb-2">
+
+              <a href="https://ok.ru/profile/587616322572"><img src="../media/photos/odnoklassniki.png" alt="" height="40" width="40"> Одноклассники</a>
+          </li>
+          <li class="mb-2">
+
+              <a href="https://telegram.dog/joskiykostya"><img src="../media/photos/telegram.png" alt="" height="40" width="40"> Телеграм</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  </body>
+</html>
